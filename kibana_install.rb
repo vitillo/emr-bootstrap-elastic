@@ -33,7 +33,6 @@ end
 
 # returns the kibana config file
 def kibana_config
-  port_num = @es_port_num
   File.open("kibana.yml", "w") do |config|
     config.puts(<<-eos
 port: 5601
@@ -62,7 +61,7 @@ bundled_plugin_ids:
 end
 
 def clean_up
-  run("rm kibana-#{@kibana_version}.tar.gz")
+  run("rm kibana-#{@kibana_version}-linux-x64.tar.gz")
 end
 
 if @is_master
