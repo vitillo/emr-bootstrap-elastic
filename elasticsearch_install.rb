@@ -18,16 +18,15 @@ end
 sudo("cp /mnt/var/lib/instance-controller/extraInstanceData.json" +
      " /mnt/var/lib/info/extraInstanceData.json")
 @region = Emr::JsonInfoFile.new('extraInstanceData')['region'].to_s
-@target_dir = "/home/hadoop/elasticsearch/"
-@run_dir = "/home/hadoop/elasticsearch/"
+@target_dir = "/mnt/elasticsearch/"
 # this is where additional logs are sent in case terminal output needs to be caught
-@log_dir = "/home/hadoop/elasticsearch/"
+@log_dir = "/mnt/elasticsearch/"
 @elasticsearch_version = "1.5.2"
 @cloud_aws_version = "2.5.0"
 @elasticsearch_port_master = 9800
 @elasticsearch_port_slaves = 9802
 
-def install_elasticsearch(target_dir, run_dir, log_dir, elasticsearch_version)
+def install_elasticsearch(target_dir, log_dir, elasticsearch_version)
   tarball = "elasticsearch-#{elasticsearch_version}.tar.gz"
   run "wget https://download.elasticsearch.org/elasticsearch/elasticsearch/#{tarball} --no-check-certificate"
   # extract to the target directory
@@ -60,5 +59,5 @@ def clean_up
   run "rm elasticsearch-#{@elasticsearch_version}.tar.gz"
 end
 
-install_elasticsearch(@target_dir, @run_dir, @log_dir, @elasticsearch_version)
+install_elasticsearch(@target_dir, @log_dir, @elasticsearch_version)
 clean_up
